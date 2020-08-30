@@ -11,9 +11,13 @@ class TodoMaster extends React.Component {
   }
 
   changeStatus(position) {
-    const updatedList = this.state.tasks.slice();
-    updatedList[position].isDone = !updatedList[position].isDone;
-    this.setState({ tasks: updatedList });
+    this.setState(state => {
+      const updatedList = state.tasks.slice();
+      const task = Object.assign({}, updatedList[position]);
+      task.isDone = !task.isDone;
+      updatedList[position] = task;
+      return { tasks: updatedList };
+    });
   }
 
   addTodo(title) {
