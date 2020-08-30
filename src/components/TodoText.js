@@ -1,15 +1,20 @@
 import React from 'react';
 
 const TodoText = function (props) {
-  const backgroundColor = props.isDone ? 'red' : 'green';
-  const textDecoration = props.isDone ? 'line-through' : 'none';
+  const colors = ['red', 'orange', 'green'];
+  const decorations = ['none', 'none', 'line-through'];
   return (
     <div
       onClick={() => props.changeStatus(props.id)}
       className='lines-container'
     >
-      <div className='status' style={{ backgroundColor }}></div>
-      <span style={{ textDecoration }}>{props.title}</span>
+      <div
+        className='status'
+        style={{ backgroundColor: colors[props.status] }}
+      ></div>
+      <span style={{ textDecoration: decorations[props.status] }}>
+        {props.title}
+      </span>
     </div>
   );
 };

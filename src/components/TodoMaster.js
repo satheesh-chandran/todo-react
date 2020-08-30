@@ -2,6 +2,8 @@ import React from 'react';
 import TextComponent from './TextComponent';
 import TodoText from './TodoText';
 
+/* status = { 0: 'notDone', 1: 'progressing', 2: 'done' } */
+
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
@@ -14,23 +16,23 @@ class TodoMaster extends React.Component {
     this.setState(state => {
       const updatedList = state.tasks.slice();
       const task = Object.assign({}, updatedList[position]);
-      task.isDone = !task.isDone;
+      task.status = (task.status + 1) % 3;
       updatedList[position] = task;
       return { tasks: updatedList };
     });
   }
 
   addTodo(title) {
-    this.setState({ tasks: this.state.tasks.concat({ isDone: false, title }) });
+    this.setState({ tasks: this.state.tasks.concat({ status: 0, title }) });
   }
 
   render() {
-    const lines = this.state.tasks.map(({ isDone, title }, index) => {
+    const lines = this.state.tasks.map(({ status, title }, index) => {
       return (
         <TodoText
           key={index}
           title={title}
-          isDone={isDone}
+          status={status}
           id={index}
           changeStatus={this.changeStatus}
         />
