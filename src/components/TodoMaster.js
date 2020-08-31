@@ -13,10 +13,24 @@ const properties = [
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [] };
+    this.state = { tasks: [], heading: 'TODO', isHeadingEditable: false };
     this.addTodo = this.addTodo.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.properties = properties.slice();
+    this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
+    this.editHeading = this.editHeading.bind(this);
+  }
+
+  makeHeadingEditable() {
+    this.setState({ isHeadingEditable: true });
+  }
+
+  addTodo(title) {
+    this.setState({ tasks: this.state.tasks.concat({ status: 0, title }) });
+  }
+
+  editHeading(heading) {
+    this.setState({ heading, isHeadingEditable: false });
   }
 
   changeStatus(position) {
@@ -29,8 +43,12 @@ class TodoMaster extends React.Component {
     });
   }
 
-  addTodo(title) {
-    this.setState({ tasks: this.state.tasks.concat({ status: 0, title }) });
+  getHeadingComponent() {
+    if (!this.state.isHeadingEditable)
+      return <h1 onClick={this.makeHeadingEditable}>{this.state.heading}</h1>;
+    return (
+      <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
+    );
   }
 
   render() {
@@ -43,8 +61,10 @@ class TodoMaster extends React.Component {
         property={this.properties[status]}
       />
     ));
+
     return (
       <div className='master'>
+        {this.getHeadingComponent()}
         <TextComponent onSubmit={this.addTodo} />
         <div className='list-container'>{lines}</div>
       </div>

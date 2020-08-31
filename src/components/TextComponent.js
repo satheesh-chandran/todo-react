@@ -3,7 +3,7 @@ import React from 'react';
 class TextComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: this.props.value || '' };
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
@@ -22,8 +22,6 @@ class TextComponent extends React.Component {
   render() {
     return (
       <div className='text'>
-        <label>Title : </label>
-        <br></br>
         <input
           value={this.state.value}
           onChange={this.onChange}

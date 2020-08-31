@@ -46,3 +46,7 @@ input {
   display: flex;
   flex-direction: column;
 }
+
+h1 {
+  cursor: pointer;
+}
