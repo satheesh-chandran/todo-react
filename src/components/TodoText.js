@@ -1,22 +1,11 @@
 import React from 'react';
 
-const TodoText = function (props) {
-  const colors = ['red', 'orange', 'green'];
-  const decorations = ['none', 'none', 'line-through'];
+export default function ({ property, id, changeStatus, title }) {
+  const { color, decoration } = property;
   return (
-    <div
-      onClick={() => props.changeStatus(props.id)}
-      className='lines-container'
-    >
-      <div
-        className='status'
-        style={{ backgroundColor: colors[props.status] }}
-      ></div>
-      <span style={{ textDecoration: decorations[props.status] }}>
-        {props.title}
-      </span>
+    <div onClick={() => changeStatus(id)} className='lines-container'>
+      <div className='status' style={{ backgroundColor: color }}></div>
+      <span style={{ textDecoration: decoration }}>{title}</span>
     </div>
   );
-};
-
-export default TodoText;
+}
