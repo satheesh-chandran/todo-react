@@ -1,11 +1,19 @@
 import React from 'react';
 
-export default function ({ property, id, changeStatus, title }) {
+export default ({ property, id, changeStatus, title, removeTask }) => {
   const { color, decoration } = property;
   return (
-    <div onClick={() => changeStatus(id)} className='lines-container'>
-      <div className='status' style={{ backgroundColor: color }}></div>
-      <span style={{ textDecoration: decoration }}>{title}</span>
+    <div className='lines-container'>
+      <div
+        style={{ textDecoration: decoration }}
+        onClick={() => changeStatus(id)}
+      >
+        <div className='status' style={{ backgroundColor: color }}></div>
+        {title}
+      </div>
+      <div className='cancelButton' onClick={() => removeTask(id)}>
+        X
+      </div>
     </div>
   );
-}
+};

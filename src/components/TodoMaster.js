@@ -14,11 +14,21 @@ class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
     this.properties = properties.slice();
-    this.state = { tasks: [], heading: 'TODO', isHeadingEditable: false };
+    this.state = {
+      tasks: [],
+      heading: 'TODO',
+      isHeadingEditable: false,
+      currentId: 0
+    };
     this.addTodo = this.addTodo.bind(this);
     this.editHeading = this.editHeading.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
+    this.removeTask = this.removeTask.bind(this);
+  }
+
+  removeTask(id) {
+    this.setState({ tasks: this.state.tasks.filter(task => task.id !== id) });
   }
 
   makeHeadingEditable() {
@@ -26,7 +36,12 @@ class TodoMaster extends React.Component {
   }
 
   addTodo(title) {
-    this.setState({ tasks: this.state.tasks.concat({ status: 0, title }) });
+    this.setState(({ currentId, tasks }) => {
+      return {
+        tasks: tasks.concat({ status: 0, title, id: currentId }),
+        currentId: currentId + 1
+      };
+    });
   }
 
   editHeading(heading) {
@@ -52,13 +67,14 @@ class TodoMaster extends React.Component {
   }
 
   render() {
-    const texts = this.state.tasks.map(({ status, title }, index) => (
+    const texts = this.state.tasks.map(({ status, title, id }) => (
       <TodoText
-        id={index}
-        key={index}
+        id={id}
+        key={id}
         title={title}
         changeStatus={this.changeStatus}
         property={this.properties[status]}
+        removeTask={this.removeTask}
       />
     ));
 

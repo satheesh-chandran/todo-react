@@ -19,12 +19,18 @@ input {
 
 .lines-container{
   display: flex;
+  justify-content: space-between;
   margin: 0 auto;
   padding: 5px;
   width: 30%;
+  border: 1px solid;
 }
 
-.lines-container:hover {
+.lines-container > div {
+  display: flex;
+}
+
+.lines-container > div:hover {
   cursor: pointer;
 }
 
@@ -49,4 +55,14 @@ input {
 
 h1 {
   cursor: pointer;
+}
+
+.cancelButton {
+  margin-left: 10px;
+  border: 1px solid;
+  padding: 0px 2px 0px 2px;
+}
+
+.cancelButton:hover {
+  color: red;
 }
