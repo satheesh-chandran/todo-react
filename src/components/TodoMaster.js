@@ -48,8 +48,9 @@ class TodoMaster extends React.Component {
     this.setState({ heading, isHeadingEditable: false });
   }
 
-  changeStatus(position) {
+  changeStatus(id) {
     this.setState(state => {
+      const position = state.tasks.findIndex(task => task.id === id);
       const updatedList = state.tasks.slice();
       const task = Object.assign({}, updatedList[position]);
       task.status = (task.status + 1) % this.properties.length;
