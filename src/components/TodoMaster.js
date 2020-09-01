@@ -13,7 +13,7 @@ const properties = [
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
-    this.properties = properties.slice();
+    this.properties = [...properties];
     this.state = {
       tasks: [],
       heading: 'TODO',
@@ -21,14 +21,16 @@ class TodoMaster extends React.Component {
       currentId: 0
     };
     this.addTodo = this.addTodo.bind(this);
+    this.removeTask = this.removeTask.bind(this);
     this.editHeading = this.editHeading.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
-    this.removeTask = this.removeTask.bind(this);
   }
 
   removeTask(id) {
-    this.setState({ tasks: this.state.tasks.filter(task => task.id !== id) });
+    this.setState(state => ({
+      tasks: state.tasks.filter(task => task.id !== id)
+    }));
   }
 
   makeHeadingEditable() {
@@ -37,10 +39,8 @@ class TodoMaster extends React.Component {
 
   addTodo(title) {
     this.setState(({ currentId, tasks }) => {
-      return {
-        tasks: tasks.concat({ status: 0, title, id: currentId }),
-        currentId: currentId + 1
-      };
+      const newTaskList = tasks.concat({ status: 0, title, id: currentId });
+      return { tasks: newTaskList, currentId: currentId + 1 };
     });
   }
 
@@ -51,8 +51,8 @@ class TodoMaster extends React.Component {
   changeStatus(id) {
     this.setState(state => {
       const position = state.tasks.findIndex(task => task.id === id);
-      const updatedList = state.tasks.slice();
-      const task = Object.assign({}, updatedList[position]);
+      const updatedList = [...state.tasks];
+      const task = { ...updatedList[position] };
       task.status = (task.status + 1) % this.properties.length;
       updatedList[position] = task;
       return { tasks: updatedList };
