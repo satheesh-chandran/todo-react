@@ -3,7 +3,7 @@ import React from 'react';
 class TextComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.value || '' };
+    this.state = { value: this.props.value };
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
@@ -13,7 +13,7 @@ class TextComponent extends React.Component {
   }
 
   onKeyDown({ keyCode }) {
-    if (keyCode === 13) {
+    if (keyCode === 13 && this.state.value !== '') {
       this.props.onSubmit(this.state.value);
       this.setState({ value: '' });
     }

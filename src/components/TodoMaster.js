@@ -1,6 +1,6 @@
 import React from 'react';
-import TextComponent from './TextComponent';
 import TodoText from './TodoText';
+import TextComponent from './TextComponent';
 
 /* status = { 0: 'notDone', 1: 'progressing', 2: 'done' } */
 
@@ -13,12 +13,12 @@ const properties = [
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
+    this.properties = properties.slice();
     this.state = { tasks: [], heading: 'TODO', isHeadingEditable: false };
     this.addTodo = this.addTodo.bind(this);
-    this.changeStatus = this.changeStatus.bind(this);
-    this.properties = properties.slice();
-    this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
     this.editHeading = this.editHeading.bind(this);
+    this.changeStatus = this.changeStatus.bind(this);
+    this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
   }
 
   makeHeadingEditable() {
@@ -52,7 +52,7 @@ class TodoMaster extends React.Component {
   }
 
   render() {
-    const lines = this.state.tasks.map(({ status, title }, index) => (
+    const texts = this.state.tasks.map(({ status, title }, index) => (
       <TodoText
         id={index}
         key={index}
@@ -65,8 +65,8 @@ class TodoMaster extends React.Component {
     return (
       <div className='master'>
         {this.getHeadingComponent()}
-        <TextComponent onSubmit={this.addTodo} />
-        <div className='list-container'>{lines}</div>
+        <TextComponent onSubmit={this.addTodo} value='' />
+        <div className='list-container'>{texts}</div>
       </div>
     );
   }
