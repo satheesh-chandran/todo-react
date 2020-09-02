@@ -13,13 +13,13 @@ const properties = [
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
-    this.properties = [...properties];
     this.state = {
       tasks: [],
+      currentId: 0,
       heading: 'TODO',
-      isHeadingEditable: false,
-      currentId: 0
+      isHeadingEditable: false
     };
+    this.properties = [...properties];
     this.addTodo = this.addTodo.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.editHeading = this.editHeading.bind(this);

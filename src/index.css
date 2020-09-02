@@ -61,8 +61,10 @@ h1 {
   margin-left: 10px;
   border: 1px solid;
   padding: 0px 2px 0px 2px;
+  visibility: hidden;
+  color: red;
 }
 
-.cancelButton:hover {
-  color: red;
+.lines-container:hover .cancelButton {
+  visibility: visible;
 }
