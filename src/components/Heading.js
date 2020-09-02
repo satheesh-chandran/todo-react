@@ -1,16 +1,17 @@
 import React from 'react';
 import TextComponent from './TextComponent';
-
+const DEFAULT_HEADING = 'TODO';
 class Heading extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isHeadingEditable: false, heading: 'TODO' };
-    this.clearTasks = this.clearTasks.bind(this);
+    this.state = { isHeadingEditable: false, heading: DEFAULT_HEADING };
+    this.reset = this.reset.bind(this);
     this.editHeading = this.editHeading.bind(this);
     this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
   }
 
-  clearTasks() {
+  reset() {
+    this.setState({ heading: DEFAULT_HEADING });
     this.props.clearTasks();
   }
 
@@ -30,7 +31,7 @@ class Heading extends React.Component {
     return (
       <h1>
         <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
-        <span className='clear' onClick={this.clearTasks}>
+        <span className='clear' onClick={this.reset}>
           X
         </span>
       </h1>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ property, id, changeStatus, title, removeTask }) => {
+const TodoText = ({ property, id, changeStatus, title, removeTask }) => {
   const { color, decoration } = property;
   return (
     <div className='lines-container'>
@@ -17,3 +17,5 @@ export default ({ property, id, changeStatus, title, removeTask }) => {
     </div>
   );
 };
+
+export default TodoText;

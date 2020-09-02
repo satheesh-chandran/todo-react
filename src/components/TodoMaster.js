@@ -23,7 +23,7 @@ class TodoMaster extends React.Component {
   }
 
   clearTasks() {
-    this.setState({ tasks: [] });
+    this.setState({ tasks: [], currentId: 0 });
   }
 
   removeTask(id) {

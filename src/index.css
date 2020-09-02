@@ -57,7 +57,7 @@ h1 span {
   cursor: pointer;
 }
 
-.cancelButton {
+.lines-container > span {
   margin-left: 10px;
   border: 1px solid;
   padding: 0px 2px 0px 2px;
