@@ -11,9 +11,9 @@ export default ({ property, id, changeStatus, title, removeTask }) => {
         <div className='status' style={{ backgroundColor: color }}></div>
         {title}
       </div>
-      <div className='cancelButton' onClick={() => removeTask(id)}>
+      <span className='cancelButton' onClick={() => removeTask(id)}>
         X
-      </div>
+      </span>
     </div>
   );
 };

@@ -53,7 +53,7 @@ input {
   flex-direction: column;
 }
 
-h1 {
+h1 span {
   cursor: pointer;
 }
 
@@ -63,6 +63,7 @@ h1 {
   padding: 0px 2px 0px 2px;
   visibility: hidden;
   color: red;
+  cursor: pointer;
 }
 
 .lines-container:hover .cancelButton {

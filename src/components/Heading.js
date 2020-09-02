@@ -23,17 +23,17 @@ class Heading extends React.Component {
   }
 
   render() {
-    if (!this.state.isHeadingEditable)
+    if (this.state.isHeadingEditable)
       return (
-        <h1>
-          <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
-          <span className='clear' onClick={this.clearTasks}>
-            X
-          </span>
-        </h1>
+        <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
       );
     return (
-      <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
+      <h1>
+        <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
+        <span className='clear' onClick={this.clearTasks}>
+          X
+        </span>
+      </h1>
     );
   }
 }
