@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoText from './TodoText';
+import Heading from './Heading';
 import TextComponent from './TextComponent';
 
 /* status = { 0: 'notDone', 1: 'progressing', 2: 'done' } */
@@ -13,19 +14,12 @@ const properties = [
 class TodoMaster extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tasks: [],
-      currentId: 0,
-      heading: 'TODO',
-      isHeadingEditable: false
-    };
+    this.state = { tasks: [], currentId: 0 };
     this.properties = [...properties];
     this.addTodo = this.addTodo.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.clearTasks = this.clearTasks.bind(this);
-    this.editHeading = this.editHeading.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
-    this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
   }
 
   clearTasks() {
@@ -38,19 +32,11 @@ class TodoMaster extends React.Component {
     }));
   }
 
-  makeHeadingEditable() {
-    this.setState({ isHeadingEditable: true });
-  }
-
   addTodo(title) {
     this.setState(({ currentId, tasks }) => {
       const newTaskList = tasks.concat({ status: 0, title, id: currentId });
       return { tasks: newTaskList, currentId: currentId + 1 };
     });
-  }
-
-  editHeading(heading) {
-    this.setState({ heading, isHeadingEditable: false });
   }
 
   changeStatus(id) {
@@ -62,21 +48,6 @@ class TodoMaster extends React.Component {
       updatedList[position] = task;
       return { tasks: updatedList };
     });
-  }
-
-  getHeadingComponent() {
-    if (!this.state.isHeadingEditable)
-      return (
-        <h1>
-          <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
-          <span className='clear' onClick={this.clearTasks}>
-            X
-          </span>
-        </h1>
-      );
-    return (
-      <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
-    );
   }
 
   render() {
@@ -93,7 +64,7 @@ class TodoMaster extends React.Component {
 
     return (
       <div className='master'>
-        {this.getHeadingComponent()}
+        <Heading clearTasks={this.clearTasks} />
         <TextComponent onSubmit={this.addTodo} value='' />
         <div className='list-container'>{texts}</div>
       </div>
