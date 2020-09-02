@@ -22,9 +22,14 @@ class TodoMaster extends React.Component {
     this.properties = [...properties];
     this.addTodo = this.addTodo.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.clearTasks = this.clearTasks.bind(this);
     this.editHeading = this.editHeading.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
+  }
+
+  clearTasks() {
+    this.setState({ tasks: [] });
   }
 
   removeTask(id) {
@@ -61,7 +66,14 @@ class TodoMaster extends React.Component {
 
   getHeadingComponent() {
     if (!this.state.isHeadingEditable)
-      return <h1 onClick={this.makeHeadingEditable}>{this.state.heading}</h1>;
+      return (
+        <h1>
+          <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
+          <span className='clear' onClick={this.clearTasks}>
+            X
+          </span>
+        </h1>
+      );
     return (
       <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
     );
