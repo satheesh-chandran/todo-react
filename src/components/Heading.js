@@ -1,42 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextComponent from './TextComponent';
-const DEFAULT_HEADING = 'TODO';
-class Heading extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isHeadingEditable: false, heading: DEFAULT_HEADING };
-    this.reset = this.reset.bind(this);
-    this.editHeading = this.editHeading.bind(this);
-    this.makeHeadingEditable = this.makeHeadingEditable.bind(this);
-  }
+const DEFAULT = 'TODO';
 
-  reset() {
-    this.setState({ heading: DEFAULT_HEADING });
-    this.props.clearTasks();
-  }
+const headingEditable = state => {
+  return { isHeadingEditable: true, heading: state.heading };
+};
 
-  makeHeadingEditable() {
-    this.setState({ isHeadingEditable: true });
-  }
+const resettingHeading = state => {
+  return { heading: DEFAULT, isHeadingEditable: state.isHeadingEditable };
+};
 
-  editHeading(heading) {
-    this.setState({ heading, isHeadingEditable: false });
-  }
-
-  render() {
-    if (this.state.isHeadingEditable)
-      return (
-        <TextComponent value={this.state.heading} onSubmit={this.editHeading} />
-      );
-    return (
-      <h1>
-        <span onClick={this.makeHeadingEditable}>{this.state.heading}</span>
-        <span className='clear' onClick={this.reset}>
-          X
-        </span>
-      </h1>
-    );
-  }
-}
+const Heading = function (props) {
+  const [state, setState] = useState({
+    heading: DEFAULT,
+    isHeadingEditable: false
+  });
+  const reset = () => {
+    props.clearTasks();
+    setState(resettingHeading);
+  };
+  const editHeading = heading =>
+    setState({ heading, isHeadingEditable: false });
+  if (state.isHeadingEditable)
+    return <TextComponent value={state.heading} onSubmit={editHeading} />;
+  return (
+    <h1>
+      <span onClick={() => setState(headingEditable)}>{state.heading}</span>
+      <span className='clear' onClick={reset}>
+        X
+      </span>
+    </h1>
+  );
+};
 
 export default Heading;
