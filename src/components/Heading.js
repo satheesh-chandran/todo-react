@@ -11,10 +11,7 @@ const resettingHeading = state => {
 };
 
 const Heading = function (props) {
-  const [state, setState] = useState({
-    heading: DEFAULT,
-    isHeadingEditable: false
-  });
+  const [state, setState] = useState({ heading: DEFAULT, isHeadingEditable: false });
   const reset = () => {
     props.clearTasks();
     setState(resettingHeading);
