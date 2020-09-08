@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextComponent from './TextComponent';
+import { sendRequest, getPostOptions } from './utils';
 const DEFAULT = 'TODO';
 
-const headingEditable = state => {
-  return { isHeadingEditable: true, heading: state.heading };
-};
-
-const resettingHeading = state => {
-  return { heading: DEFAULT, isHeadingEditable: state.isHeadingEditable };
-};
-
 const Heading = function (props) {
-  const [state, setState] = useState({ heading: DEFAULT, isHeadingEditable: false });
-  const reset = () => {
-    props.clearTasks();
-    setState(resettingHeading);
-  };
+  const [title, editTitle] = useState(DEFAULT);
+  const [refreshState, toggleRefreshState] = useState(false);
+  const [isHeadingEditable, toggleHeadingEditable] = useState(false);
+
+  useEffect(() => {
+    sendRequest('/api/heading', ({ heading }) => editTitle(heading));
+  }, [refreshState]);
+
   const editHeading = heading =>
-    setState({ heading, isHeadingEditable: false });
-  if (state.isHeadingEditable)
-    return <TextComponent value={state.heading} onSubmit={editHeading} />;
+    fetch('/api/editHeading', getPostOptions({ heading })).then(() => {
+      toggleHeadingEditable(false);
+      toggleRefreshState(s => !s);
+    });
+
+  const reset = () =>
+    fetch('/api/resetHeading').then(() => {
+      props.clearTasks();
+      toggleRefreshState(s => !s);
+    });
+
+  if (isHeadingEditable)
+    return <TextComponent value={title} onSubmit={editHeading} />;
   return (
     <h1>
-      <span onClick={() => setState(headingEditable)}>{state.heading}</span>
+      <span onClick={() => toggleHeadingEditable(true)}>{title}</span>
       <span className='clear' onClick={reset}>
         X
       </span>
