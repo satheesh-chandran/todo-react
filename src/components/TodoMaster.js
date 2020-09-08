@@ -18,18 +18,14 @@ const TodoMaster = function () {
   const toggleRefreshState = () => changeRefreshState(state => !state);
 
   useEffect(() => {
-    sendRequest('/api/getAllItems', tasks => {
-      setTasks(tasks.map(task => ({ ...task })));
-    });
+    const updateTasks = tasks => setTasks(tasks.map(task => ({ ...task })));
+    sendRequest('/api/getAllItems', updateTasks);
   }, [refresh]);
-  const option = { method: 'POST' };
-  const removeTask = id =>
-    fetch(`/api/deleteItem/${id}`, option).then(toggleRefreshState);
-  const changeStatus = id =>
-    fetch(`/api/changeStatus/${id}`, option).then(toggleRefreshState);
+
   const clearItems = () => fetch('/api/clearItems').then(toggleRefreshState);
-  const addTodo = title =>
-    sendRequest('/api/addItem', toggleRefreshState, getPostOptions({ title }));
+  const addTodo = title => fetch('/api/addItem', getPostOptions({ title })).then(toggleRefreshState);
+  const removeTask = id => fetch(`/api/deleteItem`, getPostOptions({ id })).then(toggleRefreshState);
+  const changeStatus = id => fetch(`/api/changeStatus`, getPostOptions({ id })).then(toggleRefreshState);
 
   const texts = tasks.map(({ status, title, id }) => (
     <TodoText

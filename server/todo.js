@@ -1,5 +1,5 @@
 const DEFAULT_TITLE = 'TODO';
-
+const statusCounts = 3;
 class Todo {
   constructor() {
     this.heading = DEFAULT_TITLE;
@@ -42,7 +42,7 @@ class Todo {
 
   changeStatus(id) {
     const item = this.findItem(id);
-    item.status = (item.status + 1) % 3;
+    item.status = (item.status + 1) % statusCounts;
   }
 }
 

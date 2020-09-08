@@ -27,11 +27,11 @@ const addItem = (req, res) => {
   res.send('OK');
 };
 const deleteItem = (req, res) => {
-  req.todo.deleteItem(req.params.id);
+  req.todo.deleteItem(req.body.id);
   res.send('OK');
 };
 const changeStatus = (req, res) => {
-  req.todo.changeStatus(+req.params.id);
+  req.todo.changeStatus(req.body.id);
   res.send('OK');
 };
 
@@ -47,7 +47,7 @@ app.get('/api/resetHeading', resetHeading);
 app.get('/api/getAllItems', serveTodoItems);
 app.post('/api/addItem', addItem);
 app.post('/api/editHeading', editHeading);
-app.post('/api/deleteItem/:id', deleteItem);
-app.post('/api/changeStatus/:id', changeStatus);
+app.post('/api/deleteItem', deleteItem);
+app.post('/api/changeStatus', changeStatus);
 
 app.listen(PORT, () => console.log('listening at port :', PORT));
