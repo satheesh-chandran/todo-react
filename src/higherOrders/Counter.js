@@ -9,7 +9,7 @@ const useTimer = function () {
   return count;
 };
 
-const Timer = function () {
+const Timer = () => {
   const count = useTimer();
   return <p>{count}</p>;
 };
